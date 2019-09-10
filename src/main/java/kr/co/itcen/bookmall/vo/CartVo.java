@@ -61,7 +61,7 @@ public class CartVo {
 	@Override
 	public String toString() {
 		return "CartVo [no=" + no + ", amount=" + amount + ", bookNo=" + bookNo + ", bookName=" + bookName + ", userNo="
-				+ userNo + ", userName=" + userName + "]";
+				+ userNo + ", userName=" + userName + ", userEmail=" + userEmail + ", price=" + price + "]";
 	}
 	
 }

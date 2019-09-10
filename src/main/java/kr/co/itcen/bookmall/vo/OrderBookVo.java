@@ -2,7 +2,7 @@ package kr.co.itcen.bookmall.vo;
 
 public class OrderBookVo {
 	private Long orderNo;
-	private int price;
+	private int price;		// 주문시의 책 가격 * 수량
 	private String address;
 	private String orderDate;
 	private Long userNo;
