@@ -4,18 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.itcen.bookmall.dao.OrderDao;
-import kr.co.itcen.bookmall.vo.CartVo;
 import kr.co.itcen.bookmall.vo.OrderVo;
 
 public class OrderDaoTest {
-	OrderDao dao = null;
+	private static OrderDao dao = null;
 
-	private OrderDao getDao() {
+	public static void main(String[] args) {
+		insertTest();
+		selectTest();
+		deleteTest();
+		updateTest();
+		deleteAllTest();
+	}
+	
+	private static OrderDao getDao() {
 		dao = new OrderDao();
 		return dao;
 	}
 
-	public void selectTest() {
+	private static void selectTest() {
 		System.out.println("order select ---------------");
 
 		List<OrderVo> list = new ArrayList<OrderVo>();
@@ -25,34 +32,39 @@ public class OrderDaoTest {
 		}
 	}
 
-	public void insertTest() {
+	private static void insertTest() {
 		System.out.println("order insert ---------------");
 		dao = getDao();
 
 		OrderVo vo1 = new OrderVo();
 		vo1.setAddress("서울시 용산구");
 		vo1.setUserNo(1L);
-		vo1.setOrderStateNo(1L);
+		vo1.setDeleveryStateNo(1L);
 		dao.insert(vo1);
 		System.out.println(vo1);
 
 		OrderVo vo2 = new OrderVo();
 		vo2.setAddress("서울시 강남구");
 		vo2.setUserNo(1L);
-		vo2.setOrderStateNo(1L);
+		vo2.setDeleveryStateNo(1L);
 		dao.insert(vo2);
 		System.out.println(vo2);
 
 		OrderVo vo3 = new OrderVo();
 		vo3.setAddress("서울시 동작구");
 		vo3.setUserNo(1L);
-		vo3.setOrderStateNo(1L);
+		vo3.setDeleveryStateNo(1L);
 		dao.insert(vo3);
 		System.out.println(vo3);
 
 	}
 
-	public void deleteTest() {
+	private static void deleteAllTest() {
+		System.out.println("order delete all ---------------");
+		dao.delete();
+	}
+	
+	private static void deleteTest() {
 		System.out.println("order delete ---------------");
 		dao = getDao();
 		dao.delete(1);
@@ -60,7 +72,7 @@ public class OrderDaoTest {
 		selectTest();
 	}
 
-	public void updateTest() {
+	private static void updateTest() {
 		// 배송지, 주문상태
 		System.out.println("order update ---------------");
 		dao = getDao();
@@ -68,14 +80,14 @@ public class OrderDaoTest {
 		OrderVo vo1 = new OrderVo();
 		vo1.setAddress("서울시 서대문구");
 		vo1.setUserNo(1L);
-		vo1.setOrderStateNo(1L);
+		vo1.setDeleveryStateNo(2L);
 		dao.update(vo1);
 		System.out.println(vo1);
 
 		OrderVo vo2 = new OrderVo();
 		vo2.setAddress("서울시 강남구");
 		vo2.setUserNo(2L);
-		vo2.setOrderStateNo(2L);
+		vo2.setDeleveryStateNo(2L);
 		dao.update(vo2);
 		System.out.println(vo2);
 	}

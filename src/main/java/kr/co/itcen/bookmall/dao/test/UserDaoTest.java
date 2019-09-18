@@ -7,14 +7,22 @@ import kr.co.itcen.bookmall.dao.UserDao;
 import kr.co.itcen.bookmall.vo.UserVo;
 
 public class UserDaoTest {
-	UserDao dao = null;
-	
-	private UserDao getDao() {
+	private static UserDao dao = null;
+
+	public static void main(String[] args) {
+		insertTest();
+		selectTest();
+		deleteTest();
+		updateTest();
+		deleteAllTest();
+	}
+		
+	private static UserDao getDao() {
 		dao = new UserDao();
 		return dao;
 	}
 	
-	public void selectTest() {
+	private static void selectTest() {
 		System.out.println("user select ---------------");
 		
 		List<UserVo> list = new ArrayList<UserVo>();
@@ -24,7 +32,7 @@ public class UserDaoTest {
 		}
 	}
 	
-	public void insertTest() {
+	private static void insertTest() {
 		System.out.println("user insert ---------------");
 		dao = getDao();
 		
@@ -56,8 +64,13 @@ public class UserDaoTest {
 		System.out.println(vo3);
 		
 	}
-	
-	public void deleteTest() {
+
+	private static void deleteAllTest() {
+		System.out.println("user delete all ---------------");
+		dao.delete();
+	}
+		
+	private static void deleteTest() {
 		System.out.println("user delete ---------------");
 		dao = getDao();
 		dao.delete(1);
@@ -65,7 +78,7 @@ public class UserDaoTest {
 		selectTest();
 	}
 	
-	public void updateTest() {
+	private static void updateTest() {
 		System.out.println("user update ---------------");
 		dao = getDao();
 		

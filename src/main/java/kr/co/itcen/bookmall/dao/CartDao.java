@@ -105,7 +105,39 @@ public class CartDao {
 
 		return result;
 	}
+	
+	public Boolean delete() {
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		Boolean result = false;
+		try {
 
+			connection = DBConn.getConnection();
+
+			String sql = "delete from cart";
+
+			pstmt = connection.prepareStatement(sql);
+
+			int count = pstmt.executeUpdate();
+			result = (count == 1);
+
+		} catch (SQLException e) {
+			System.out.println("error: "+e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection !=  null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	public Boolean delete(int no) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;

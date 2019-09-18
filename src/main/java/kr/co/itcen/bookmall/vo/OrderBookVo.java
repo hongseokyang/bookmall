@@ -9,6 +9,14 @@ public class OrderBookVo {
 	private String userName;
 	private Long bookNo;
 	private String bookName;
+	private int amount;
+	
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 	public Long getOrderNo() {
 		return orderNo;
 	}
@@ -61,7 +69,8 @@ public class OrderBookVo {
 	public String toString() {
 		return "OrderBookVo [orderNo=" + orderNo + ", price=" + price + ", address=" + address + ", orderDate="
 				+ orderDate + ", userNo=" + userNo + ", userName=" + userName + ", bookNo=" + bookNo + ", bookName="
-				+ bookName + "]";
+				+ bookName + ", amount=" + amount + "]";
 	}
+	
 	
 }

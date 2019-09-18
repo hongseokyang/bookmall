@@ -9,31 +9,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.itcen.bookmall.util.DBConn;
-import kr.co.itcen.bookmall.vo.CategoryVo;
+import kr.co.itcen.bookmall.vo.OrderBookVo;
 
-public class CategoryDao {
-	
-	public List<CategoryVo> getList() {
-		List<CategoryVo> result = new ArrayList<CategoryVo>();
+public class OrderBookDao {
+	public List<OrderBookVo> getList() {
+		List<OrderBookVo> result = new ArrayList<OrderBookVo>();
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			connection = DBConn.getConnection();
 
-			String sql = "select no, name from category order by no asc";
+			String sql = "select o.no, ob.amount, (ob.amount * ob.price) as price, o.order_date, u.user_name, b.name, from order_book ob, order o, user u, book b where ob.order_no = o.no and o.no = u.no and ob.book_no = b.no order by o.no desc";
 			pstmt = connection.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
 
 			while(rs.next()) {
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-
-				CategoryVo vo = new CategoryVo();
-				vo.setNo(no);
-				vo.setName(name);
-
+				Long orderNo = rs.getLong(1);
+				int amount = rs.getInt(2);
+				int price = rs.getInt(3);
+				String orderDate = rs.getString(4);
+				String userName = rs.getString(5);
+				String bookName = rs.getString(6);
+				
+				OrderBookVo vo = new OrderBookVo();
+				vo.setOrderNo(orderNo);
+				vo.setAmount(amount);
+				vo.setPrice(price);
+				vo.setOrderDate(orderDate);
+				vo.setUserName(userName);
+				vo.setBookName(bookName);
+				
 				result.add(vo);
 			}
 
@@ -55,28 +62,25 @@ public class CategoryDao {
 		return result;
 	}
 
-	public Boolean insert(CategoryVo vo) {
+	public Boolean insert(OrderBookVo vo) {
 		Boolean result = false;
 		Connection connection = null;
-		Statement stmt = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 
 			connection = DBConn.getConnection();
 
-			String sql = "insert into category values(null, ?)";
+			String sql = "insert into order_book values(?, ?, ?, ?)";
 			pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
+			pstmt.setLong(1, vo.getOrderNo());
+			pstmt.setLong(2, vo.getBookNo());
+			pstmt.setInt(3, vo.getAmount());
+			pstmt.setInt(4, vo.getPrice());
+			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
 			
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery("select last_insert_id()");
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				vo.setNo(no);
-			}
 			
 		} catch (SQLException e) {
 			System.out.println("error: "+e);
@@ -85,9 +89,6 @@ public class CategoryDao {
 				if(rs != null) {
 					rs.close();
 				}
-				if(stmt != null) {
-					stmt.close();
-				}
 				if(pstmt != null) {
 					pstmt.close();
 				}
@@ -101,7 +102,7 @@ public class CategoryDao {
 
 		return result;
 	}
-
+	
 	public Boolean delete() {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -110,7 +111,7 @@ public class CategoryDao {
 
 			connection = DBConn.getConnection();
 
-			String sql = "delete from category";
+			String sql = "delete from order_book";
 			
 			pstmt = connection.prepareStatement(sql);
 			
@@ -134,7 +135,7 @@ public class CategoryDao {
 		return result;
 	}
 	
-	public Boolean delete(int no) {
+	public Boolean delete(int orderNo, int bookNo) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		Boolean result = false;
@@ -142,10 +143,11 @@ public class CategoryDao {
 
 			connection = DBConn.getConnection();
 
-			String sql = "delete from category where no = ?";
+			String sql = "delete from order_book where order_no = ? and book_no = ?";
 			
 			pstmt = connection.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setInt(1, orderNo);
+			pstmt.setInt(2, bookNo);
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -166,10 +168,8 @@ public class CategoryDao {
 		}
 		return result;
 	}
-	
-	
-	
-	public void update(CategoryVo vo) {
+
+	public void update(OrderBookVo vo) {
 		Connection connection = null;
 		Statement stmt = null;
 		PreparedStatement pstmt = null;
@@ -178,10 +178,12 @@ public class CategoryDao {
 
 			connection = DBConn.getConnection();
 
-			String sql = "update category set name = ? where no = ?";
+			String sql = "update order_book set amount = ? where order_no = ? and book_no = ?";
 			pstmt = connection.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
-			pstmt.setLong(2, vo.getNo());
+			pstmt.setInt(1, vo.getAmount());
+			pstmt.setLong(2, vo.getOrderNo());
+			pstmt.setLong(3, vo.getBookNo());
+			
 			pstmt.executeUpdate();
 			
 			
@@ -207,6 +209,4 @@ public class CategoryDao {
 		}
 
 	}
-	
-	
 }

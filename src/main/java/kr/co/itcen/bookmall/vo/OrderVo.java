@@ -1,42 +1,33 @@
 package kr.co.itcen.bookmall.vo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class OrderVo {
 	private Long no;
 	private String address;
 	private String orderDate;
 	private Long userNo;
 	private String userName;
-	private Long orderStateNo;
-	private String orderState;
-	private int price;		// 주문 가격
-	private ArrayList<OrderBookVo> orderBook;
+	private String userEmail;
+	private Long deleveryStateNo;
+	private String deleveryState;
 	
-	public ArrayList<OrderBookVo> getOrderBook() {
-		return orderBook;
+	
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setOrderBook(ArrayList<OrderBookVo> orderBook) {
-		this.orderBook = orderBook;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
-	public int getPrice() {
-		return price;
+	public Long getDeleveryStateNo() {
+		return deleveryStateNo;
 	}
-	public void setPrice(int price) {
-		this.price = price;
+	public void setDeleveryStateNo(Long deleveryStateNo) {
+		this.deleveryStateNo = deleveryStateNo;
 	}
-	public Long getOrderStateNo() {
-		return orderStateNo;
+	public String getDeleveryState() {
+		return deleveryState;
 	}
-	public void setOrderStateNo(Long orderStateNo) {
-		this.orderStateNo = orderStateNo;
-	}
-	public String getOrderState() {
-		return orderState;
-	}
-	public void setOrderState(String orderState) {
-		this.orderState = orderState;
+	public void setDeleveryState(String deleveryState) {
+		this.deleveryState = deleveryState;
 	}
 	public Long getNo() {
 		return no;
@@ -71,17 +62,10 @@ public class OrderVo {
 	@Override
 	public String toString() {
 		return "OrderVo [no=" + no + ", address=" + address + ", orderDate=" + orderDate + ", userNo=" + userNo
-				+ ", userName=" + userName + ", orderStateNo=" + orderStateNo + ", orderState=" + orderState
-				+ ", price=" + price + ", orderBook=" + orderBookList() + "]";
+				+ ", userName=" + userName + ", userEmail=" + userEmail + ", deleveryStateNo=" + deleveryStateNo
+				+ ", deleveryState=" + deleveryState + "]";
 	}
 	
-	public String orderBookList() {
-		String[] orderBookArr = new String[orderBook.size()];
-		int i=0;
-		for (OrderBookVo orderBookVo : orderBook) {
-			orderBookArr[i] = orderBookVo.getBookName();
-		}
-		
-		return Arrays.toString(orderBookArr);
-	}
+	
+	
 }

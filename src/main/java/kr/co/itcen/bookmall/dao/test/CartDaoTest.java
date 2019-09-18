@@ -7,14 +7,22 @@ import kr.co.itcen.bookmall.dao.CartDao;
 import kr.co.itcen.bookmall.vo.CartVo;
 
 public class CartDaoTest {
-	CartDao dao = null;
-
-	private CartDao getDao() {
+	private static CartDao dao = null;
+	
+	public static void main(String[] args) {
+		insertTest();
+		selectTest();
+		deleteTest();
+		updateTest();
+		deleteAllTest();
+	}
+	
+	private static CartDao getDao() {
 		dao = new CartDao();
 		return dao;
 	}
 
-	public void selectTest() {
+	private static void selectTest() {
 		System.out.println("cart select ---------------");
 
 		List<CartVo> list = new ArrayList<CartVo>();
@@ -24,7 +32,7 @@ public class CartDaoTest {
 		}
 	}
 
-	public void insertTest() {
+	private static void insertTest() {
 		System.out.println("cart insert ---------------");
 		dao = getDao();
 
@@ -50,8 +58,13 @@ public class CartDaoTest {
 		System.out.println(vo3);
 
 	}
-
-	public void deleteTest() {
+	
+	private static void deleteAllTest() {
+		System.out.println("cart delete all ---------------");
+		dao.delete();
+	}
+	
+	private static void deleteTest() {
 		System.out.println("cart delete ---------------");
 		dao = getDao();
 		dao.delete(1);
@@ -59,7 +72,7 @@ public class CartDaoTest {
 		selectTest();
 	}
 
-	public void updateTest() {
+	private static void updateTest() {
 		System.out.println("cart update ---------------");
 		dao = getDao();
 

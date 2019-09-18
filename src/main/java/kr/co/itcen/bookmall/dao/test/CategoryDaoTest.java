@@ -7,14 +7,22 @@ import kr.co.itcen.bookmall.dao.CategoryDao;
 import kr.co.itcen.bookmall.vo.CategoryVo;
 
 public class CategoryDaoTest {
-	CategoryDao dao = null;
+	private static CategoryDao dao = null;
 	
-	private CategoryDao getDao() {
+	public static void main(String[] args) {
+		insertTest();
+		selectTest();
+		deleteTest();
+		updateTest();
+		deleteAllTest();
+	}
+	
+	private static CategoryDao getDao() {
 		dao = new CategoryDao();
 		return dao;
 	}
 	
-	public void selectTest() {
+	private static void selectTest() {
 		System.out.println("category select ---------------");
 		
 		List<CategoryVo> list = new ArrayList<CategoryVo>();
@@ -24,7 +32,7 @@ public class CategoryDaoTest {
 		}
 	}
 	
-	public void insertTest() {
+	private static void insertTest() {
 		System.out.println("category insert ---------------");
 		dao = getDao();
 		CategoryVo vo1 = new CategoryVo();
@@ -44,7 +52,12 @@ public class CategoryDaoTest {
 		
 	}
 	
-	public void deleteTest() {
+	private static void deleteAllTest() {
+		System.out.println("category delete all ---------------");
+		dao.delete();
+	}
+	
+	private static void deleteTest() {
 		System.out.println("category delete ---------------");
 		dao = getDao();
 		dao.delete(1);
@@ -52,7 +65,7 @@ public class CategoryDaoTest {
 		selectTest();
 	}
 	
-	public void updateTest() {
+	private static void updateTest() {
 		System.out.println("category update ---------------");
 		dao = getDao();
 		
